@@ -167,9 +167,35 @@ $ go build main.go
 ```
 after that you need to export environment variables - just like in docker stage above and run as average binary.
 
-### How to build a Docker image
+### How to build a Docker image for development
+Build
 ```bash
 docker buildx build \
     --tag ghcr.io/klaudijuskungys/zabbix-exporter-3000:latest \
-    ghcr.io/klaudijuskungys/zabbix-exporter-3000:latest
+    -f Dockerfile.dev \
+    .
+```
+Run (don't forget to replace variables)
+```bash
+docker run \
+      -p 8080:8080 \
+      -e ZABBIX_API_ENDPOINT=https://<ZABBIX_DOMAIN>/api_jsonrpc.php \
+      -e ZABBIX_USER="<USER>" \
+      -e ZABBIX_PASSWORD='<PASSWORD>' \
+      -e ZABBIX_SKIP_SSL=false \
+      -e ZE3000_STRICT_METRIC_REG=true \
+      -e ZE3000_METRIC_NAME_FIELD="key_" \
+      -e ZE3000_SINGLE_METRIC=false \
+      -e ZE3000_METRIC_NAMESPACE="it" \
+      -e ZE3000_METRIC_SUBSYSTEM="metrics" \
+      -e ZE3000_METRIC_NAME_PREFIX="slo" \
+      -e ZE3000_METRIC_NAME_FIELD="key_" \
+      -e ZE3000_METRIC_VALUE="lastvalue" \
+      -e ZE3000_METRIC_HELP="description" \
+      -e ZE3000_METRIC_URI_PATH="/metrics" \
+      -e ZE3000_ZABBIX_REFRESH_DELAY_SEC=20 \
+      -e ZE3000_ZABBIX_METRIC_LABELS="itemid,key_,hosts>host,hosts>name,interfaces>ip,interface>dns" \
+      -e ZE3000_HOST_PORT=localhost:8080 \
+      -e ZE3000_ZABBIX_QUERY='<JSON_QUERY>' \
+      ghcr.io/klaudijuskungys/zabbix-exporter-3000:latest
 ```
