@@ -3,8 +3,6 @@ just another zabbix exporter for [Prometheus](https://prometheus.io/)
 
 like the other exporters it use Zabbix API and represent response as [Prometheus](https://prometheus.io/) metrics.
 
-![Docker hub stats](https://img.shields.io/docker/pulls/rzrbld/ze3000?style=flat-square) ![GitHub License](https://img.shields.io/github/license/rzrbld/zabbix-exporter-3000?style=flat-square)
-
 ### Limitations:
 
 Main limitation - one instance = one query.
@@ -131,7 +129,7 @@ docker run -d \
       -e ZE3000_ZABBIX_METRIC_LABELS="itemid,key_,hosts>host,hosts>name,interfaces>ip,interface>dns" \
       -e ZE3000_HOST_PORT=localhost:8080 \
       -e ZE3000_ZABBIX_QUERY='{     "jsonrpc": "2.0",     "method": "item.get",     "params": {     	"application":"My Super Application",         "output": ["itemid","key_","description","lastvalue"],         "selectDependencies": "extend",         "selectHosts": ["name","status","host"],         "selectInterfaces": ["ip","dns"],         "sortfield":"key_"     },     "auth": "%auth-token%",     "id": 1 }' \
-      rzrbld/ze3000:latest
+      ghcr.io/klaudijuskungys/zabbix-exporter-3000:latest
 
 ```
 :boom: let's suppose everything running ok, and you don't have any error messages from ze3000 <br/><br/>
@@ -154,6 +152,8 @@ megacompany_frontend_nginx_numbeofconnections{hosts_host="mega.application",host
 
 Look at example deployments at `k8s` folder in this repo.
 
+## Build
+
 ### How to build standalone binary
 
 #### requirements
@@ -161,8 +161,15 @@ Look at example deployments at `k8s` folder in this repo.
  - git client
 
 ``` bash
-$ git clone https://github.com/rzrbld/zabbix-exporter-3000
+$ git clone https://github.com/klaudijuskungys/zabbix-exporter-3000
 $ cd zabbix-exporter-3000
 $ go build main.go
 ```
 after that you need to export environment variables - just like in docker stage above and run as average binary.
+
+### How to build a Docker image
+```bash
+docker buildx build \
+    --tag ghcr.io/klaudijuskungys/zabbix-exporter-3000:latest \
+    ghcr.io/klaudijuskungys/zabbix-exporter-3000:latest
+```

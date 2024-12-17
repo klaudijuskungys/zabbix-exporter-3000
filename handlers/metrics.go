@@ -2,14 +2,15 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/prometheus/client_golang/prometheus"
-	cnf "github.com/rzrbld/zabbix-exporter-3000/config"
-	zbx "github.com/rzrbld/zabbix-exporter-3000/zabbix"
 	"log"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	cnf "github.com/klaudijuskungys/zabbix-exporter-3000/config"
+	zbx "github.com/klaudijuskungys/zabbix-exporter-3000/zabbix"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 var sourceRefreshSec, _ = strconv.Atoi(cnf.SourceRefresh)
@@ -30,7 +31,7 @@ var uniqMetricDesc []string
 var itemsMetric *prometheus.GaugeVec
 var metricsMap = make(map[string]*prometheus.GaugeVec, 1000)
 
-//helpers
+// helpers
 func cleanUpName(name string) string {
 	reg, err := regexp.Compile("[^a-zA-Z0-9]+")
 	if err != nil {

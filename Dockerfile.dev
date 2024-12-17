@@ -1,11 +1,9 @@
 FROM golang:1.14-alpine
 
-LABEL maintainer="rzrbld <razblade@gmail.com>"
-
-ENV GOPATH /go
-ENV CGO_ENABLED 0
-ENV GO111MODULE on
-ENV GOPROXY https://proxy.golang.org
+ENV GOPATH=/go
+ENV CGO_ENABLED=0
+ENV GO111MODULE=on
+ENV GOPROXY=https://proxy.golang.org
 
 ADD . /src/
 RUN cd /src/ && go build main.go && cp main /go/bin/ze3000

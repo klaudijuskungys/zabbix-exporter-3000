@@ -1,9 +1,9 @@
-module github.com/rzrbld/zabbix-exporter-3000
+module github.com/klaudijuskungys/zabbix-exporter-3000
 
 go 1.14
 
 require (
-	github.com/cavaliercoder/go-zabbix v0.0.0-20220606012333-8601f92dd2eb
+	github.com/fabiang/go-zabbix v1.0.0
 	github.com/iris-contrib/middleware/prometheus v0.0.0-20220605200020-e50b808c7502
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
 	github.com/kataras/iris/v12 v12.2.0-beta3
